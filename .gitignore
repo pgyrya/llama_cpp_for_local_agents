@@ -46,3 +46,5 @@ models/
 archive/
 mcp-services/doc-editor/documents/.gitkeep
 .config/webui/settings.json
+mcp-services/linkedin-search/
+mcp-services/job-search/
