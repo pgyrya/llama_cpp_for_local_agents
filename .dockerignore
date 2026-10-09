@@ -1,0 +1,44 @@
+# Models (mounted separately, not needed in build context)
+models/
+
+# MCP web search (deprecated, use mcp-services/web-search/)
+mcp-web-search/
+
+# Archive (historical files, not needed for builds)
+archive/
+
+# Python artifacts
+**/.venv/
+**/node_modules/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.egg-info
+**/*.egg
+**/*.whl
+
+# Node.js artifacts
+**/node_modules/
+**/dist/
+**/.tsbuildinfo
+
+# IDE files
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+**/*Zone.Identifier
+**/*.bak
+**/*.tmp
+**/._*
+
+# Docker-specific
+**/.dockerignore
+**/.git/
+
+# Logs
+**/*.log

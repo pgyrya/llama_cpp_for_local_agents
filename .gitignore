@@ -1,0 +1,48 @@
+# Local model files (large binary GGUF files, ~84GB total)
+models/
+
+# Environment configuration (contains secrets)
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+**/*.egg
+**/*.so
+**/*.so.*
+**/*.whl
+**/.pytest_cache/
+**/.mypy_cache/
+**/.python-version
+
+# Node.js dependencies
+**/node_modules/
+
+# Build outputs
+**/dist/
+
+# IDE files
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+**/*~
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+**/*Zone.Identifier
+**/*.bak
+**/*.bak*
+**/*.tmp
+
+
+# Build artifacts in archive
+archive/
+mcp-services/doc-editor/documents/.gitkeep
+.config/webui/settings.json
