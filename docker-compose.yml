@@ -21,33 +21,37 @@ services:
     volumes:
       - ./models:/models:ro
       - /home/ubuntu/.cache/huggingface/hub:/hf_models:ro
-      
       # mount UI configuration file
       - ./.config/ui-config.json:/ui-config.json
-
       # # Mount your shared MCP configuration file
       # - ./.config/mcp-config.json:/mcp-config.json
       # # Mount the Python stdio bridge for doc-editor - only needed if using mcp config file
       # - ./mcp-services/doc-editor/src/stdio-bridge.py:/bridge/stdio-bridge.py:ro
 
-    # # Qwen3.6-35B-A3B, quantized - 64+4K context window
+    # # Qwen3.6-35B-A3B, quantized - 64+4K context window, timeout 10 minutes
     command: >
       -m /models/qwen/Qwen3.6-35B-A3B-Q4_K_M.gguf
       --mmproj /models/qwen/mmproj-Qwen3.6-35B-A3B-BF16.gguf
-      -np 1
+      --no-mmproj-offload
+      --image-min-tokens 1024
       --threads 6
       --load-mode none
+      --fit off
+      -np 1
       -c 69632
+      --reasoning_budget 256
       -b 2048
-      -ub 1024
+      -ub 512
       -ctk q8_0
       -ctv q8_0
       -fa 'on'
-      --n-cpu-moe 27
-      --reasoning off
-      --fit off
-      --image-min-tokens 1024
+      --n-cpu-moe 23
+      --timeout 600
 
+    # # Also consider the following parameters: 
+    # --reasoning off (perhaps sufficient for agentic coding where the thoughs can be shown directly)
+    # --n-predict 6144 (max. number of tokens to predict)
+    # --moe-cache-mib 1024 (maybe this needs llama.cpp version update?)
     deploy:
       resources:
         reservations:
@@ -55,7 +59,6 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:41980/health"]
       interval: 30s
@@ -75,23 +78,23 @@ services:
     restart: unless-stopped
     network_mode: host
 
-  doc-editor-mcp:
-    build:
-      context: ./mcp-services/doc-editor
-    env_file: .env
-    container_name: doc-editor-mcp
-    environment:
-      DOCX_MCP_VENV: /opt/venv
-      HTTP_PORT: "3001"
-    command: ["node", "/opt/doc-editor/dist/http-wrapper.js"]
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ${DOC_EDITOR_FOLDER}:/documents
-      # - /mnt/d/pavel/Downloads/Doc-Editor:/documents
-    healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 60s
+  # doc-editor-mcp:
+  #   build:
+  #     context: ./mcp-services/doc-editor
+  #   env_file: .env
+  #   container_name: doc-editor-mcp
+  #   environment:
+  #     DOCX_MCP_VENV: /opt/venv
+  #     HTTP_PORT: "3001"
+  #   command: ["node", "/opt/doc-editor/dist/http-wrapper.js"]
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   volumes:
+  #     - ${DOC_EDITOR_FOLDER}:/documents
+  #     # - /mnt/d/pavel/Downloads/Doc-Editor:/documents
+  #   healthcheck:
+  #     test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+  #     interval: 30s
+  #     timeout: 5s
+  #     retries: 3
+  #     start_period: 60s
