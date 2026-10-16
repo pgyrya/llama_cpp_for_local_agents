@@ -16,10 +16,7 @@ Service-specific specs live in the service's subfolder - e.g.:
 
 | Location | Capability |
 |----------|-----------|
-| [doc-editor specs](../mcp-services/doc-editor/specifications/README.md) | Document editing MCP tools |
 | [web-search specs](../mcp-services/web-search/specifications/README.md) | Web search MCP tools |
-| [job-search specs](../mcp-services/job-search/specifications/README.md) | Job search MCP tools |
-| [linkedin-search specs](../mcp-services/linkedin-search/specifications/README.md) | LinkedIn job search MCP tools |
 
 ## Creating a New Specification
 

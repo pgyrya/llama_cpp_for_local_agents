@@ -2,9 +2,7 @@
 
 This folder builds a Docker image for the `web-search-mcp` project by cloning the
 upstream repository, installing dependencies (including Playwright browsers),
-and building the TypeScript source. The container runs a native Streamable HTTP
-MCP server that reuses the upstream search/content extraction code.
-
+and building the TypeScript source. The container adds a native Streamable HTTP layer to the MCP server that reuses the upstream search/content extraction code.
 
 Build locally:
 
@@ -20,7 +18,7 @@ docker compose up -d web-search-mcp
 
 ## Testing
 
-No automated tests implemented yet — see [shared-testing-narrative.md](../shared-testing-narrative.md) for the shared testing narrative.
+No automated tests implemented yet - this has been tested manually in llama.cpp UI.
 
 The service exposes a streaming HTTP endpoint on port `5005` that proxies a single
 MCP endpoint for llama.cpp. Use:
@@ -30,7 +28,7 @@ MCP endpoint for llama.cpp. Use:
 Because the Compose service publishes `0.0.0.0:5005:5005`, the same endpoint is
 also reachable from outside localhost through your host IP, for example:
 
-- http://<windows-ip>:5005/mcp
+- http://localhost:5005/mcp
 
 For llama.cpp's MCP Servers tab, use the Streamable HTTP URL above rather than a
 WebSocket URL.

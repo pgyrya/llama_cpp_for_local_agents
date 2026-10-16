@@ -13,4 +13,3 @@ This folder contains specification documents for each tool in the web-search MCP
 ## How to Use
 
 - Each spec file documents one tool with its purpose, parameters, and testing state.
-- For active development tracking, see [TODO.md](../TODO.md).

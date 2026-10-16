@@ -16,7 +16,7 @@ Per [AGENTS.md](AGENTS.md), written information should never be duplicated acros
 | Troubleshooting guides | [docs/troubleshooting.md](docs/troubleshooting.md) |
 | MCP service documentation | [mcp-services/*/README.md](mcp-services/README.md) |
 | Model documentation | [models/](models/README.md) folder (create README.md) |
-| Improvement ideas & bugs | [TODO.md](TODO.md) |
+| Improvement ideas & bugs | General: [TODO.md](TODO.md). MCP-specific: `mcp-services/<service>/TODO.md`|
 | Repository rules | [AGENTS.md](AGENTS.md) |
 
 ### README Files

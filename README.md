@@ -10,19 +10,21 @@ This setup runs a local LLM server with CUDA support, integrated with MCP server
 
 | Component | Description |
 |-----------|-------------|
-| `docker-compose.yml` | Docker Compose configuration for llama.cpp server with CUDA |
+| [docker-compose.yml](./docker-compose.yml) | Docker Compose configuration for llama.cpp server with CUDA |
 | `models/` | GGUF model files and multimodal projectors (mmproj) |
-| `mcp-services/` | MCP server implementations (doc-editor, web-search, job-search, linkedin-search) |
+| `mcp-services/` | MCP server implementations (e.g. web-search-mcp) |
 | `.config/` | MCP and UI configuration files |
 | `specifications/` | Feature specifications |
 
 ## Prerequisites
 
 - **OS**: Ubuntu 22.04+ (or WSL2 on Windows)
-- **GPU**: NVIDIA GPU with CUDA support (8GB+ VRAM recommended)
+- **GPU**: NVIDIA GPU with CUDA support (11 GB+ VRAM recommended)
+- **RAM**: 32 GB+ recommended
 - **Docker**: Docker Engine with NVIDIA Container Toolkit
 - **Node.js**: v20+ (for MCP server development)
 - **Python**: 3.10+ (for MCP server development)
+- **Model**: Download a model you plan to use from Huggingface - see [models/](models/README.md) for the models tested.
 
 ## Quick Start
 
@@ -32,116 +34,67 @@ This setup runs a local LLM server with CUDA support, integrated with MCP server
 # Clone the repository
 git clone <repo-url>
 cd llama_cpp
-
-# Create configuration directory
-mkdir -p .config
 ```
 
-### 2. Configure MCP Servers
-
-Create the following configuration files:
-
-- [`.config/mcp-config.json`](.config/mcp-config.json) — MCP server definitions for llama.cpp
-- [`.config/ui-config.json`](.config/ui-config.json) — UI-specific MCP client configuration
-
-See [docs/architecture.md](docs/architecture.md) for configuration examples.
-
-### 3. Start the LLM Server
+### 2. Start the LLM Server
 
 ```bash
 # Build and start with Docker Compose
 docker-compose up -d
-
-# Check logs
-docker logs local-llm -f
 ```
 
-The server will be available at `http://localhost:41980`.
+The server will be available at `http://localhost:41980` as both UI and completions endpoint.
 
-### 4. Access the UI
+The OpenAI completion endpoint is also available at http://localhost:41980/v1/ - e.g. 
+http://localhost:41980/v1/models
+
+### 3. Access the UI
 
 Open `http://localhost:41980` in your browser to access the llama.cpp web UI.
 
-## Models
-
-See [models/](models/README.md) for available model files and multimodal projector compatibility.
-
-## MCP Services
-
-### doc-editor
-
-A TypeScript MCP facade over SecurityRonin's docx-mcp Python server. Provides tools for Word document operations (see [server.ts](mcp-services/doc-editor/src/server.ts) for the complete list).
-
-**Documentation**: [mcp-services/doc-editor/README.md](mcp-services/doc-editor/README.md)
-
-### web-search
-
-Web search MCP server. **Documentation**: [mcp-services/web-search/README.md](mcp-services/web-search/README.md)
-
-### job-search
-
-Job search MCP server. **Documentation**: [mcp-services/job-search/README.md](mcp-services/job-search/README.md)
-
-### linkedin-search
-
-LinkedIn search MCP server. **Documentation**: [mcp-services/linkedin-search/README.md](mcp-services/linkedin-search/README.md)
-
-## Docker Compose
-
-See [docker-compose.yml](docker-compose.yml) for the full configuration. The default setup uses Qwen3.6-35B-A3B.
-
-### Switching Models
-
-Edit the `command` section in [docker-compose.yml](docker-compose.yml) to use a different model. Commented-out configurations for alternative models are included in the file.
-
 ## Development
-
-### Building MCP Servers
-
-```bash
-# doc-editor
-cd mcp-services/doc-editor
-npm install
-npm run build
-```
-
-### Testing
-
-```bash
-# Run doc-editor tests
-cd mcp-services/doc-editor
-npx tsx --test test/*.test.ts
-```
-
-For testing details on other MCP services, see [mcp-services/shared-testing-narrative.md](mcp-services/shared-testing-narrative.md).
-
-### Docker Build
-
-```bash
-# Build doc-editor MCP server image
-cd mcp-services/doc-editor
-docker build -t doc-editor-mcp .
-
-# Run standalone
-docker run --rm -p 3001:3001 doc-editor-mcp
-```
-
-## Architecture
-
-See [docs/architecture.md](docs/architecture.md) for detailed system architecture and data flow diagrams.
-
-## Troubleshooting
-
-See [docs/troubleshooting.md](docs/troubleshooting.md) for common issues and solutions.
 
 ## Specifications
 
 Feature specifications are documented in the [specifications/](specifications/README.md) folder. See [specifications/README.md](specifications/README.md) for the structure and guidelines.
 
+### Architecture
+
+See [docs/architecture.md](docs/architecture.md) for detailed system architecture and data flow diagrams.
+
+### Docker Compose
+
+See [docker-compose.yml](docker-compose.yml) for the full configuration.
+
+The default setup uses Qwen3.6-35B-A3B - a very practical model for local deployment as of late 2026.
+
+Edit the `command` section in [docker-compose.yml](docker-compose.yml) to use a different model. 
+
+Consider to keep alternative configurations tested - commented-out in the file.
+
+### MCP Services
+
+See individual folders in the `mcp-services` subfolder for documentation.
+
+Here is a useful example: 
+
+-  Web search MCP server. **Documentation**: [mcp-services/web-search/README.md](mcp-services/web-search/README.md)
+
+
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on where to document different types of information and how to contribute to the repository.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on where to document different types of information and how to contribute to the repository.
+
+See also [AGENTS.md](./AGENTS.md) for instructions which should be generally read by agents but also useful for coordination across developers.
 
 ## License
 
-This repository is for educational and development purposes. Model files are subject to their respective licenses.
+This repository's original content is licensed under the [MIT License](./LICENSE).
+
+### Third-Party Licenses
+
+Third-party software remains under its respective license:
+
+- **llama.cpp**: The `llama` service uses the `ghcr.io/ggml-org/llama.cpp:server-cuda` image, sourced from [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp). It is licensed under the [MIT License](https://github.com/ggml-org/llama.cpp/blob/master/LICENSE).
+- **web-search-mcp**: The web-search service clones [mrkrsl/web-search-mcp](https://github.com/mrkrsl/web-search-mcp) during its Docker build and is licensed under its [MIT License](https://github.com/mrkrsl/web-search-mcp/blob/main/LICENSE).
+- **Other MCP servers, if any**: Their applicable license information is provided in the corresponding service subfolder.

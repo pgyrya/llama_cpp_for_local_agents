@@ -4,12 +4,13 @@ The following rules are intended to maintain transparency of the current state o
 
 - Each feature request should be documented as a user story in a single place - e.g. product subfolder of the main repo or a stand-alone sub-project
 - Each functionality implemented need to be documented as a specification, at least on a high level, typically in the specifications/ subfolder of the project, or a similar subfolder of the specific capability
+- each specification should have a purpose - could link to a request file in the product folder, and could have an ID
 - the testing state for each specified functionality should be described in the same document
-    - list all the tests applied to verify the behavior of a feature, ideally adding a working link to the test files and referencing the corresponding functions, if relevant
-    - include a narrative reasoning whether and why the tests included or planned are sufficient to ensure alignment with the the behavior spec, and the ultimatel goal of the feature development is also satisfied.
-    - if some gaps emerge, propose additional tests along with succinct reasoning on why these are necessary / sufficient
-    - if these are not clearly sufficient, leave a todo item asking to think further
-- each specification should have a purpose (could link to a request file in the product folder), perhaps an ID
+    - think through and list all the invariants/behaviors that must be satisfied given specifications as one-line statement.
+    - point to the tests applied to verify each behavior, ideally adding a working link to the test files and referencing the corresponding functions, if relevant
+    - think through carefully whether the invariants listed and the tests included / planned are sufficient to ensure alignment with the behavior spec, and the ultimatel goal of the feature development is also satisfied.
+    - if some gaps emerge, propose additional invariants / tests along with succinct reasoning on why these are necessary / sufficient
+    - if these are not clearly sufficient, include a todo item in the feature spec document, asking to think further
 - Whenever referencing a file in this project, include a clickable link like [this](relative/path/to/file.ext)
 
 ## How to minimize maintenance
