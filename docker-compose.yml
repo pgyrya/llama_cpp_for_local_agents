@@ -46,11 +46,10 @@ services:
       -ctv q8_0
       -fa 'on'
       --n-cpu-moe 23
-      --timeout 600
+      --timeout 1200
+      --no-reasoning-preserve
 
     # # Also consider the following parameters: 
-    # --reasoning off (perhaps sufficient for agentic coding where the thoughs can be shown directly)
-    # --n-predict 6144 (max. number of tokens to predict)
     # --moe-cache-mib 1024 (maybe this needs llama.cpp version update?)
     deploy:
       resources:
@@ -78,23 +77,3 @@ services:
     restart: unless-stopped
     network_mode: host
 
-  # doc-editor-mcp:
-  #   build:
-  #     context: ./mcp-services/doc-editor
-  #   env_file: .env
-  #   container_name: doc-editor-mcp
-  #   environment:
-  #     DOCX_MCP_VENV: /opt/venv
-  #     HTTP_PORT: "3001"
-  #   command: ["node", "/opt/doc-editor/dist/http-wrapper.js"]
-  #   restart: unless-stopped
-  #   network_mode: host
-  #   volumes:
-  #     - ${DOC_EDITOR_FOLDER}:/documents
-  #     # - /mnt/d/pavel/Downloads/Doc-Editor:/documents
-  #   healthcheck:
-  #     test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
-  #     interval: 30s
-  #     timeout: 5s
-  #     retries: 3
-  #     start_period: 60s
