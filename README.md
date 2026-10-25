@@ -52,6 +52,12 @@ http://localhost:41980/v1/models
 
 Open `http://localhost:41980` in your browser to access the llama.cpp web UI.
 
+### 4. Configure VS Code Copilot to use this model
+
+See [VS Code BYOK](https://code.visualstudio.com/docs/agent-customization/language-models#_bring-your-own-language-model-key) for setting up custom models.
+
+See [chatLanguageModels.example.json](chatLanguageModels.example.json) for an example of json configuration to make this model available as local AI assistant.
+
 ## Development
 
 ## Specifications

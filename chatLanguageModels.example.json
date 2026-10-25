@@ -1,0 +1,28 @@
+	{
+		"name": "Locally Deployed",
+		"vendor": "customendpoint",
+		"apiType": "chat-completions",
+		"models": [
+			{
+				"id": "/models/qwen/Qwen3.6-35B-A3B-Q4_K_M.gguf",
+				"name": "Qwen3.6-35B-A3B",
+				"url": "http://localhost:41980",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 43488,
+				"maxOutputTokens": 6144,
+				"supportsReasoningEffort": [
+					"low",
+					"medium",
+					"high",
+					"none"
+				]
+			}
+		],
+		"settings": {
+			"Qwen3.6-35B-A3B": {
+				"pinned": true,
+				"reasoningEffort": "high"
+			}
+		}
+	}
