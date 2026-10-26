@@ -12,6 +12,7 @@ services:
       - LLAMA_ARG_PORT=41980
       - LLAMA_ARG_UI_MCP_PROXY=1
       - LLAMA_ARG_UI_CONFIG_FILE=/ui-config.json
+      # - LLAMA_ARG_SSE_PING_INTERVAL=10
       # - LLAMA_ARG_MCP_SERVERS_CONFIG=/mcp-config.json
     network_mode: host
     ulimits:
@@ -28,7 +29,7 @@ services:
       # # Mount the Python stdio bridge for doc-editor - only needed if using mcp config file
       # - ./mcp-services/doc-editor/src/stdio-bridge.py:/bridge/stdio-bridge.py:ro
 
-    # # Qwen3.6-35B-A3B, quantized - 64+4K context window, timeout 10 minutes
+    # # Qwen3.6-35B-A3B, quantized
     command: >
       -m /models/qwen/Qwen3.6-35B-A3B-Q4_K_M.gguf
       --mmproj /models/qwen/mmproj-Qwen3.6-35B-A3B-BF16.gguf
@@ -38,19 +39,16 @@ services:
       --load-mode none
       --fit off
       -np 1
-      -c 69632
+      -c 59632
       --reasoning_budget 256
-      -b 2048
-      -ub 512
+      -b 4096
+      -ub 2048
       -ctk q8_0
       -ctv q8_0
       -fa 'on'
       --n-cpu-moe 23
       --timeout 1200
-      --no-reasoning-preserve
-
-    # # Also consider the following parameters: 
-    # --moe-cache-mib 1024 (maybe this needs llama.cpp version update?)
+      --reasoning-preserve
     deploy:
       resources:
         reservations:
