@@ -8,4 +8,5 @@
         "requestTimeoutSeconds": 300,
         "useProxy": true
     }
+  ]
 }
