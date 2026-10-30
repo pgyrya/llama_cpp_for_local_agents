@@ -37,14 +37,8 @@ models/
 **/.DS_Store
 **/Thumbs.db
 **/*Zone.Identifier
-**/*.bak
-**/*.bak*
 **/*.tmp
 
 
-# Build artifacts in archive
+# Build artifacts and settings in archive
 archive/
-mcp-services/doc-editor/documents/.gitkeep
-.config/webui/settings.json
-mcp-services/linkedin-search/
-mcp-services/job-search/

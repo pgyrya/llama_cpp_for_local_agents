@@ -13,7 +13,6 @@ services:
       - LLAMA_ARG_UI_MCP_PROXY=1
       - LLAMA_ARG_UI_CONFIG_FILE=/ui-config.json
       # - LLAMA_ARG_SSE_PING_INTERVAL=10
-      # - LLAMA_ARG_MCP_SERVERS_CONFIG=/mcp-config.json
     network_mode: host
     ulimits:
       memlock:
@@ -24,10 +23,6 @@ services:
       - /home/ubuntu/.cache/huggingface/hub:/hf_models:ro
       # mount UI configuration file
       - ./.config/ui-config.json:/ui-config.json
-      # # Mount your shared MCP configuration file
-      # - ./.config/mcp-config.json:/mcp-config.json
-      # # Mount the Python stdio bridge for doc-editor - only needed if using mcp config file
-      # - ./mcp-services/doc-editor/src/stdio-bridge.py:/bridge/stdio-bridge.py:ro
 
     # # Qwen3.6-35B-A3B, quantized
     command: >
@@ -62,6 +57,20 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+  openai-chat-retry-proxy:
+    build:
+      context: ./services/openai-chat-retry-proxy
+    container_name: openai-chat-retry-proxy
+    network_mode: host
+    environment:
+      - UPSTREAM_URL=http://127.0.0.1:41980
+      - HOST=127.0.0.1
+      - PORT=41981
+      - HEADER_GRACE_MS=180000
+      - RETRY_DELAY_MS=120000
+      - HEARTBEAT_INTERVAL_MS=15000
+      - MAX_RETRIES=1
+    restart: unless-stopped
   web-search-mcp:
     build:
       context: ./mcp-services/web-search

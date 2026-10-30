@@ -13,6 +13,7 @@ This setup runs a local LLM server with CUDA support, integrated with MCP server
 | [docker-compose.yml](./docker-compose.yml) | Docker Compose configuration for llama.cpp server with CUDA |
 | `models/` | GGUF model files and multimodal projectors (mmproj) |
 | `mcp-services/` | MCP server implementations (e.g. web-search-mcp) |
+| `services/`| Other services. Example: [retry proxy](./services/openai-chat-retry-proxy/README.md) is an optional local gateway for streaming Copilot requests that could take a long time to start|
 | `.config/` | MCP and UI configuration files |
 | `specifications/` | Feature specifications |
 
@@ -54,7 +55,7 @@ Open `http://localhost:41980` in your browser to access the llama.cpp web UI.
 
 ### 4. Configure VS Code Copilot to use this model
 
-See [VS Code BYOK](https://code.visualstudio.com/docs/agent-customization/language-models#_bring-your-own-language-model-key) for setting up custom models.
+See [VS Code BYOK](https://code.visualstudio.com/docs/agent-customization/language-models#_bring-your-own-language-model-key) for setting up custom models. The example configuration uses the optional [retry proxy](./services/openai-chat-retry-proxy/README.md); the direct llama.cpp endpoint remains at port `41980`.
 
 See [chatLanguageModels.example.json](chatLanguageModels.example.json) for an example of json configuration to make this model available as local AI assistant.
 

@@ -6,7 +6,7 @@
 			{
 				"id": "/models/qwen/Qwen3.6-35B-A3B-Q4_K_M.gguf",
 				"name": "Qwen3.6-35B-A3B",
-				"url": "http://localhost:41980",
+				"url": "http://localhost:41981",
 				"toolCalling": true,
 				"vision": true,
 				"maxInputTokens": 43488,

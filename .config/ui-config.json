@@ -7,14 +7,5 @@
         "url": "http://localhost:5005/",
         "requestTimeoutSeconds": 300,
         "useProxy": true
-    },
-    {
-        "id": "doc-editor",
-        "enabled": true,
-        "name": "Docx Editor",
-        "url": "http://localhost:3001/",
-        "requestTimeoutSeconds": 300,
-        "useProxy": true
     }
-    ]
 }

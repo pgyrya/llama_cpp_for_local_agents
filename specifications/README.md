@@ -16,7 +16,8 @@ Service-specific specs live in the service's subfolder - e.g.:
 
 | Location | Capability |
 |----------|-----------|
-| [web-search specs](../mcp-services/web-search/specifications/README.md) | Web search MCP tools |
+| [web-search MCP specs](../mcp-services/web-search/specifications/README.md) | Web search MCP tools |
+| [OpenAI chat retry proxy](./services/openai-chat-retry-proxy/openai-chat-retry-proxy.md) | Resilient local streaming endpoint for Copilot BYOK |
 
 ## Creating a New Specification
 

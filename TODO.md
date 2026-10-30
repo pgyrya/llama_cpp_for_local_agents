@@ -10,3 +10,4 @@ For action items specific to individual MCP services, please see `TODO.md` in th
 - [ ] Document system GPU requirements and  model recommendations
 
 ### Agent suggestions
+- [ ] Live-verify Copilot BYOK through the retry proxy: confirm the SSE fallback keeps the 2026-10-27 long-prefill request connected and one pre-output upstream failure retries after 120 seconds ([specification](specifications/openai-chat-retry-proxy.md)).
